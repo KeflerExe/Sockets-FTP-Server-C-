@@ -6,18 +6,31 @@
 ## About The Project
 
 
-In different fields of science there is a need to work with very big, or very small  numerical values.
-With this program im implementing data types in C++ to handle 
-very large numeric values, exceeding the representation range of the defined data types
-in standard language. To do this, the generic data type BigInt<size_t Base> is defined
-which represents integers using positional notation. In this numbering system, the value of a digit depends on its relative position and the base, which determines the number of
-digits needed to write any number. By default, the decimal system will be used
-(base 10), although it is also common to use the binary (base 2), octal (base 8) and hexadecimal (base 16).
+The File Transfer protocol is thought for transferring files between a client and a server in order to store or
+retrieve them from the server. This protocol bases on the TCP transport protocol and uses the well-known ports
+20 and 21. Two TCP connections are involved: The control connection (port 21) and the data connection (port
+20). The control connection is used to transfer commands and the replies to these commands. The transfer of a
+file needs to use several commands. Note that here the word “command” does not refer to the commands that
+the user types into the command line of the FTP client program, it refers to the textual commands, defined in
+the FTP protocol, that the client will send to the server.
 
-The representation range of the BigInt<size_t Base> data type encompasses any integer, positive or negative, that can be stored in machine memory.
-That is, the maximum range is limited by the maximum size that the system allows for the data structure where the digits are stored.
+Two different file transfer modes can be distinguished:
 
-Using the BigInt<Base> data type, the program implements a calculator for expressions in inverse Polish notation.
+• Active mode: The client connects from a unprivileged port N to the server command port (port 21).
+Then, the client starts listening to port M and sends the FTP command PORT M to the FTP server. The
+server will then connect back from port 20 to port M of the client. Figure 1 illustrates the active mode.
+The main problem with this procedure is that the server connects back to the client, which often is a
+problem with firewalls that drop non known incoming connections.
+
+• Passive mode: To solve the issue that arises when using active mode, the clients support passive mode.
+In passive mode, the client initiates both connections (control and data).
+When opening an FTP connection, the client opens two random unprivileged ports locally. The first port
+contacts the server on port 21. Then the client issues a PASV command and the server responds with a
+port number. After that the client connects to that port in order to transfer the data.
+
+This repository contains a robust implementation of a File Transfer Protocol (FTP) server using sockets. With support for both active and passive mode connections, this server facilitates seamless file transfer between clients and the server.
+
+Whether you're building a standalone FTP server or integrating FTP functionality into an existing application, this repository provides a solid foundation for your file transfer needs.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -51,12 +64,7 @@ No installation required :)
 
 1. Download the files
 2. Compile with g++
-```
-g++ bigint_main.cc bigint_func.cc
-```
-4. All ready!
-
-(You can find instructions about the arguments of the program inside the bigint_func.cc file.)
+3. All ready!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
